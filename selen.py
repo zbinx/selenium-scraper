@@ -12,19 +12,22 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+# Below code pulls the variables for uesrname, password and server from the config.py file in root directory.
+from config import DB_USERNAME, DB_PASSWORD, DB_SERVER 
+
 # create the options variable to avoid errors & to add options like headless or window size.
 options = webdriver.ChromeOptions()
-options.add_argument("--headless")
+options.add_argument("--headless=new")
 
 # Do not use headless until you verify in real time the code is doing what you want it to do.
-options.add_argument("--window-size=1920,1080")
+#options.add_argument("--window-size=1920,1080")
 
 # add the webdriver you downloaded into the root folder of project and call it using ./chromedriver
 #driver = webdriver.Chrome("./chromedriver") 
 # the code above is deprecated and replaced with code below.
 
 s = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=s)
+driver = webdriver.Chrome(service=s, options=options)
 
 # The webpage you are scraping for step 1.
 driver.get("https://www.twinbusch.com/product_info.php?products_id=8")
@@ -55,8 +58,8 @@ else:
     
 # Create the email message
 msg = MIMEMultipart()
-msg['From'] = 'User@gmail.com'
-msg['To'] = 'User@gmail.com'
+msg['From'] = DB_USERNAME
+msg['To'] = DB_USERNAME
 msg['Subject'] = result
 
 # Add the scraped result to the email message
@@ -64,15 +67,15 @@ body = str(result)
 msg.attach(MIMEText(body, str))
 
 # Set up the SMTP server and send the email.
-smtp_server = 'smtp.gmail.com'
+smtp_server = DB_SERVER
 smtp_port = 587
-smtp_username = 'User@gmail.com'
-smtp_password = 'app-password-here'  # If using gmail, need to use App passwords to retrieve this.
+smtp_username = DB_USERNAME
+smtp_password = DB_PASSWORD  # If using gmail, need to use App passwords to retrieve this.
 smtp_connection = smtplib.SMTP(smtp_server, smtp_port)
 smtp_connection.starttls()
 smtp_connection.login(smtp_username, smtp_password)
 smtp_connection.sendmail(msg['From'], msg['To'], msg.as_string())
 smtp_connection.quit()
 
-#print(driver.page_source)
+#print(driver.page_source) 
 driver.quit()
