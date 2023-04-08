@@ -12,7 +12,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-# Below code pulls the variables for uesrname, password and server from the config.py file in root directory.
+# Below code pulls the variables for username, password and server from the config.py file in root directory.
 from config import DB_USERNAME, DB_PASSWORD, DB_SERVER 
 
 # create the options variable to avoid errors & to add options like headless or window size.
