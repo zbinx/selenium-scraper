@@ -1,4 +1,5 @@
 #!/bin/usr/python3
+# Using python3 3.8.10
 # Using Chrome version 112 with ChromeDriver 112.0.5615.49
 
 # import all the necessary modules and packages
